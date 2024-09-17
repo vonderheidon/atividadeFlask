@@ -7,13 +7,22 @@
 </head>
 <body>
     <div class="container">
-        <h1>Detalhes do Produto</h1>
-        <p>ID: {{ produto[0] }}</p>
-        <p>Nome: {{ produto[1] }}</p>
-        <p>Cadastrado por: {{ produto[2] }}</p>
-        <p>Quantidade: {{ produto[3] }}</p>
-        <p>Preço: {{ produto[4] }}</p>
-        <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+        <div>
+            <h1>Detalhes do Produto</h1>
+        </div>
+        <div class="productInfos">
+            <p>ID: {{ produto[0] }}</p>
+            <p>Nome: {{ produto[1] }}</p>
+            <p>Cadastrado por: {{ produto[2] }}</p>
+            <p>Quantidade: {{ produto[3] }}</p>
+            <p>Preço: {{ produto[4] }}</p>
+        </div>
+        <div class="backPage">
+            <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+        </div>
+        <div class="message">
+            <p>{{ get_flashed_messages()[0] }}</p>
+        </div>
     </div>
 </body>
 </html>

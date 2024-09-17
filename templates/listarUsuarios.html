@@ -9,29 +9,37 @@
 </head>
 <body>
     <div class="container">
-        <h1>Usuários Cadastrados</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Login</th>
-                    <th>Tipo de Usuário</th>
-                    <th>Editar</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for usuario in usuarios %}
-                <tr>
-                    <td>{{ usuario[0] }}</td>
-                    <td>{{ usuario[2] }}</td>
-                    <td>
-                        <a href="/editar/{{ usuario[0] }}"><i class="fas fa-edit"></i></a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p>{{ get_flashed_messages()[0] }}</p>
-        <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+        <div>
+            <h1>Usuários Cadastrados</h1>
+        </div>
+        <div class="tabPage">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Login</th>
+                        <th>Tipo de Usuário</th>
+                        <th>Editar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario[0] }}</td>
+                        <td>{{ usuario[2] }}</td>
+                        <td>
+                            <a href="/editar/{{ usuario[0] }}"><i class="fas fa-edit"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="backPage">
+            <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+        </div>
+        <div class="message">
+            <p>{{ get_flashed_messages()[0] }}</p>
+        </div>
     </div>
 </body>
 </html>

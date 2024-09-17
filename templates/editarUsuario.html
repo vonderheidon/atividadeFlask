@@ -8,16 +8,25 @@
 </head>
 <body>
     <div class="container">
-        <h1>Editar Usuário {{ usuario[0] }}</h1>
-        <form method="POST">
-            <label for="tipo">Tipo:</label>
-            <select id="tipo" name="tipo" required>
-                <option value="normal" {% if usuario[2] == 'normal' %}selected{% endif %}>Normal</option>
-                <option value="super" {% if usuario[2] == 'super' %}selected{% endif %}>Super</option>
-            </select>
-            <button type="submit">Atualizar</button>
-        </form>
-        <a href="{{ url_for('listar_usuarios') }}">Voltar</a>
+        <div>
+            <h1>Editar Usuário {{ usuario[0] }}</h1>
+        </div>
+        <div class="pageForm">
+            <form method="POST">
+                <label for="tipo">Tipo:</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="normal" {% if usuario[2] == 'normal' %}selected{% endif %}>Normal</option>
+                    <option value="super" {% if usuario[2] == 'super' %}selected{% endif %}>Super</option>
+                </select>
+                <button type="submit">Atualizar</button>
+            </form>
+        </div>
+        <div class="backPage">
+            <a href="{{ url_for('listar_usuarios') }}">Voltar</a>
+        </div>
+        <div class="message">
+            <p>{{ get_flashed_messages()[0] }}</p>
+        </div>
     </div>
 </body>
 </html>
