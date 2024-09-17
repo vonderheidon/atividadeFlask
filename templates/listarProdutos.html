@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <p>{{ get_flashed_messages()[0] }}</p>
+    <a href="{{ url_for('adicionar_produto') }}">Adicionar Produto</a>
+    {% if tipo_usuario == 'super' %}
+        <a href="{{ url_for('listar_usuarios') }}">Gerenciar Usuários</a>
+    {% endif %}
+    <h1>Produtos Cadastrados</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto[0] }}</td>
+                <td>{{ produto[1] }}</td>
+                <td>{{ produto[3] }}</td>
+                <td>{{ produto[4] }}</td>
+                <td>
+                    <a href="{{ url_for('detalhes_produto', id=produto[0]) }}" title="Detalhes"><i class="fas fa-info-circle"></i></a>
+                    <a href="{{ url_for('editar_produto', id=produto[0]) }}" title="Editar"><i class="fas fa-edit"></i></a>
+                    <a href="{{ url_for('excluir_produto', id=produto[0]) }}" title="Excluir"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('logout') }}">Sair</a>
+</body>
+</html>
