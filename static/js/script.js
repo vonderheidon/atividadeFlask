@@ -23,6 +23,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const totalRows = filteredRows.length;
         const totalPages = Math.ceil(totalRows / rowsPerPage);
 
+        // Se não houver linhas filtradas, desabilite os botões de paginação
+        if (totalRows === 0) {
+            document.getElementById('pageDisplay').textContent = `Nenhum produto encontrado`;
+            document.getElementById('prevPage').disabled = true;
+            document.getElementById('nextPage').disabled = true;
+            return;
+        }
+
         function displayPage(page) {
             const startRow = (page - 1) * rowsPerPage;
             const endRow = startRow + rowsPerPage;

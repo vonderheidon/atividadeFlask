@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 </head>
 <body>
-    <h1>Editar Usuário {{ usuario[0] }}</h1>
-    <form method="POST">
-        <label for="tipo">Tipo:</label>
-        <select id="tipo" name="tipo" required>
-            <option value="normal" {% if usuario[2] == 'normal' %}selected{% endif %}>Normal</option>
-            <option value="super" {% if usuario[2] == 'super' %}selected{% endif %}>Super</option>
-        </select>
-
-        <button type="submit">Atualizar</button>
-    </form>
-    <a href="{{ url_for('listar_usuarios') }}">Voltar</a>
+    <div class="container">
+        <h1>Editar Usuário {{ usuario[0] }}</h1>
+        <form method="POST">
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" name="tipo" required>
+                <option value="normal" {% if usuario[2] == 'normal' %}selected{% endif %}>Normal</option>
+                <option value="super" {% if usuario[2] == 'super' %}selected{% endif %}>Super</option>
+            </select>
+            <button type="submit">Atualizar</button>
+        </form>
+        <a href="{{ url_for('listar_usuarios') }}">Voltar</a>
+    </div>
 </body>
 </html>

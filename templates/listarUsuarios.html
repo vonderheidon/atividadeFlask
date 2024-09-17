@@ -4,30 +4,34 @@
     <meta charset="UTF-8">
     <title>Lista de Usuários</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tables.css') }}">
 </head>
 <body>
-    <h1>Usuários Cadastrados</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Login</th>
-                <th>Tipo de Usuário</th>
-                <th>Editar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for usuario in usuarios %}
-            <tr>
-                <td>{{ usuario[0] }}</td>
-                <td>{{ usuario[2] }}</td>
-                <td>
-                    <a href="/editar/{{ usuario[0] }}"><i class="fas fa-edit"></i></a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p>{{ get_flashed_messages()[0] }}</p>
-    <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+    <div class="container">
+        <h1>Usuários Cadastrados</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Login</th>
+                    <th>Tipo de Usuário</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario[0] }}</td>
+                    <td>{{ usuario[2] }}</td>
+                    <td>
+                        <a href="/editar/{{ usuario[0] }}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>{{ get_flashed_messages()[0] }}</p>
+        <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+    </div>
 </body>
 </html>

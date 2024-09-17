@@ -1,28 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="POST">
-        <div>
-            <label for="login">Login:</label>
-            <input type="text" id="login" name="login" required>
-        </div>
-        <div>
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required>
-        </div>
-        <button type="submit">Entrar</button>
-    </form>
-    <a href="{{ url_for('cadastro') }}">Cadastrar</a>
-    {% if session.get('usuario_logado') %}
-        <p>Você está logado como {{ session['usuario_logado'] }}</p>
-        <a href="{{ url_for('logout') }}">Sair</a>
-    {% endif %}
-    <p>{{ get_flashed_messages()[0] }}</p>
+    <div class="container">
+        <h1>Login</h1>
+        <form method="POST">
+            <div>
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login" required>
+            </div>
+            <div>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <a href="{{ url_for('cadastro') }}">Cadastrar</a>
+        {% if session.get('usuario_logado') %}
+            <p>Você está logado como {{ session['usuario_logado'] }}</p>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        {% endif %}
+        <p>{{ get_flashed_messages()[0] }}</p>
+    </div>
 </body>
 </html>

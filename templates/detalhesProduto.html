@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalhes do Produto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Detalhes do Produto</h1>
-    <p>ID: {{ produto[0] }}</p>
-    <p>Nome: {{ produto[1] }}</p>
-    <p>Cadastrado por: {{ produto[2] }}</p>
-    <p>Quantidade: {{ produto[3] }}</p>
-    <p>Preço: {{ produto[4] }}</p>
-    <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+    <div class="container">
+        <h1>Detalhes do Produto</h1>
+        <p>ID: {{ produto[0] }}</p>
+        <p>Nome: {{ produto[1] }}</p>
+        <p>Cadastrado por: {{ produto[2] }}</p>
+        <p>Quantidade: {{ produto[3] }}</p>
+        <p>Preço: {{ produto[4] }}</p>
+        <a href="{{ url_for('listar_produtos') }}">Voltar</a>
+    </div>
 </body>
 </html>

@@ -1,0 +1,11 @@
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    loginuser VARCHAR(50) NOT NULL,
+    qtde INT NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    CONSTRAINT fk_usuario
+        FOREIGN KEY (loginuser)
+        REFERENCES usuario (loginuser)
+        ON DELETE CASCADE
+);
