@@ -11,12 +11,37 @@
             <h1>Detalhes do Produto</h1>
         </div>
         <div class="productInfos">
-            <p>ID: {{ produto[0] }}</p>
-            <p>Nome: {{ produto[1] }}</p>
-            <p>Cadastrado por: {{ produto[2] }}</p>
-            <p>Quantidade: {{ produto[3] }}</p>
-            <p>Preço: {{ produto[4] }}</p>
-        </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ID</td>
+                        <td>{{ produto[0] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nome</td>
+                        <td>{{ produto[1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Cadastrado por</td>
+                        <td>{{ produto[2] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Quantidade</td>
+                        <td>{{ produto[3] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Preço</td>
+                        <td>{{ produto[4] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>        
         <div class="backPage">
             <a href="{{ url_for('listar_produtos') }}">Voltar</a>
         </div>

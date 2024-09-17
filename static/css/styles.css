@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+/* Estilos gerais */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f5;
@@ -26,6 +27,12 @@ a:hover {
     text-decoration: underline;
 }
 
+p {
+    text-align: center;
+    margin-top: 15px;
+    color: #e74c3c;
+}
+
 button {
     background-color: #3498db;
     color: white;
@@ -45,4 +52,134 @@ button:hover {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+}
+
+/* Estilo para formulários */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input:focus, select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Estilo global para tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+    background-color: #3498db;
+    color: white;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+th i {
+    margin-left: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Estilo para ícones de ações */
+i {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+i:hover {
+    color: #2980b9;
+}
+
+/* Estilo para o campo de busca */
+#searchBar {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* Estilo para os controles de paginação */
+#paginationControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#paginationControls button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+#paginationControls button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+#paginationControls span {
+    margin: 0 10px;
+    font-size: 1.1em;
+}
+
+/* Estilo específico para a tabela dentro de .productInfos */
+.productInfos table {
+    max-width: 600px; /* Defina o valor desejado para o tamanho máximo */
+    margin: 0 auto;   /* Centraliza a tabela na div */
+}
+
+.productInfos td, .productInfos th {
+    padding: 10px; /* Adiciona padding para as células */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+.productInfos th {
+    background-color: #3498db; /* Mantém a cor de fundo dos cabeçalhos igual ao listarProdutos */
+    color: white; /* Cor do texto nos cabeçalhos */
 }
