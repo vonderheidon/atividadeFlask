@@ -1,11 +1,9 @@
-/* Reset básico para garantir consistência entre navegadores */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilos gerais */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f5;
@@ -16,6 +14,14 @@ body {
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
     font-weight: 600;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #3498db;
+    font-size: 2em;
+    font-weight: bold;
 }
 
 a {
@@ -46,7 +52,6 @@ button:hover {
     background-color: #2980b9;
 }
 
-/* Container global para centralização */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -54,7 +59,6 @@ button:hover {
     padding: 20px;
 }
 
-/* Estilo para formulários */
 form {
     background-color: #fff;
     padding: 20px;
@@ -86,7 +90,10 @@ input:focus, select:focus {
     outline: none;
 }
 
-/* Estilo global para tabelas */
+.hidden {
+    display: none;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -120,7 +127,6 @@ th i {
     cursor: pointer;
 }
 
-/* Estilo para ícones de ações */
 i {
     margin: 0 5px;
     cursor: pointer;
@@ -130,22 +136,18 @@ i:hover {
     color: #2980b9;
 }
 
-/* Estilo para o campo de busca */
 #searchBar {
     width: 300px;
     padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1em;
 }
 
-/* Estilo para os controles de paginação */
 #paginationControls {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
 }
 
 #paginationControls button {
@@ -168,18 +170,77 @@ i:hover {
     font-size: 1.1em;
 }
 
-/* Estilo específico para a tabela dentro de .productInfos */
 .productInfos table {
-    max-width: 600px; /* Defina o valor desejado para o tamanho máximo */
-    margin: 0 auto;   /* Centraliza a tabela na div */
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .productInfos td, .productInfos th {
-    padding: 10px; /* Adiciona padding para as células */
-    text-align: left; /* Alinha o texto à esquerda */
+    padding: 10px;
+    text-align: left;
 }
 
 .productInfos th {
-    background-color: #3498db; /* Mantém a cor de fundo dos cabeçalhos igual ao listarProdutos */
-    color: white; /* Cor do texto nos cabeçalhos */
+    background-color: #3498db;
+    color: white;
+}
+
+.backPage {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.backPage a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.backPage a:hover {
+    background-color: #2980b9;
+}
+
+.menuContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.menu {
+    display: flex;
+    align-items: left;
+    padding: 10px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    margin: 0 10px;
+}
+
+.menu a:hover {
+    color: #2980b9;
+}
+
+.menu i {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+
+.tableControl {
+    display: flex;
+    justify-content: space-between;
 }

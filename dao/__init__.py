@@ -1,10 +1,10 @@
 import psycopg2
 from psycopg2 import pool
 
-# Configura o pool de conexões
+
 db_pool = psycopg2.pool.SimpleConnectionPool(
-    1,  # Mínimo de conexões
-    10, # Máximo de conexões
+    1,
+    10,
     host='localhost',
     database='atvd1bcc',
     user='postgres',

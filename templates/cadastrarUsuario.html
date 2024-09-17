@@ -21,6 +21,10 @@
                     <label for="senha">Senha:</label>
                     <input type="password" id="senha" name="senha" required>
                 </div>
+                <div id="hiddenDiv" class="hidden">
+                    <label for="super">Para fins de desenvolvimento, marque o checkbox para criar um usuário super</label>
+                    <input type="checkbox" id="super" name="super">
+                </div>
                 <button type="submit">Cadastrar</button>
             </form>
         </div>
@@ -31,5 +35,6 @@
             <p>{{ get_flashed_messages()[0] }}</p>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

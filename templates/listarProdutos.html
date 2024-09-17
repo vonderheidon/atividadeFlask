@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Lista de Produtos</title>
@@ -8,18 +8,20 @@
 </head>
 <body>
     <div class="container">
-        <div class="menu">
-            <a href="{{ url_for('adicionar_produto') }}">Adicionar Produto</a>
-            {% if tipo_usuario == 'super' %}
-                <a href="{{ url_for('listar_usuarios') }}">Gerenciar Usuários</a>
-            {% endif %}
-            <a href="{{ url_for('logout') }}">Sair</a>
-        </div>
+
         <div>
             <h1>Produtos Cadastrados</h1>
         </div>
-        <div>
-            <input type="text" id="searchBar" placeholder="Buscar produto...">
+        <div class="menuContainer">
+            <div class="menu">
+                <a href="{{ url_for('adicionar_produto') }}"><i class="fas fa-plus-circle"></i> Adicionar Produto</a>
+                {% if tipo_usuario == 'super' %}
+                <a href="{{ url_for('listar_usuarios') }}"><i class="fas fa-users"></i> Gerenciar Usuários</a>
+                {% endif %}
+            </div>
+            <div class="menu">
+                <a href="{{ url_for('logout') }}" class="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </div>
         </div>
         <div class="tabPage">
             <table>
@@ -49,10 +51,15 @@
                 </tbody>
             </table>
         </div>
-        <div id="paginationControls">
-            <button id="prevPage">Anterior</button>
-            <span id="pageDisplay"></span>
-            <button id="nextPage">Próximo</button>
+        <div class="tableControl">
+            <div id="paginationControls">
+                <button id="prevPage">Anterior</button>
+                <span id="pageDisplay"></span>
+                <button id="nextPage">Próximo</button>
+            </div>
+            <div>
+                <input type="text" id="searchBar" placeholder="Buscar produto...">
+            </div>
         </div>
         <div class="message">
             <p>{{ get_flashed_messages()[0] }}</p>

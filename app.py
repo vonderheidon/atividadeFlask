@@ -4,8 +4,12 @@ import dao
 app = Flask(__name__)
 app.secret_key = '123chave'
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    if 'usuario_logado' in session:
+        return redirect(url_for('listar_produtos'))
+
     if request.method == 'POST':
         login = request.form['login']
         senha = request.form['senha']
@@ -14,6 +18,7 @@ def index():
             return redirect(url_for('listar_produtos'))
         else:
             flash("Login ou senha incorretos.")
+
     return render_template('index.html')
 
 @app.route('/listarUsuarios')
@@ -169,11 +174,12 @@ def cadastro():
     if request.method == 'POST':
         login = request.form['login']
         senha = request.form['senha']
+        tipo_usuario = 'super' if request.form.get('super') else 'normal'
 
         if dao.verificarSeLoginExiste(login):
             flash("Este login já está em uso. Tente outro.")
         else:
-            dao.criarUsuario(login, senha, 'normal')
+            dao.criarUsuario(login, senha, tipo_usuario)
             flash("Cadastro realizado com sucesso. Faça login para continuar.")
             return redirect(url_for('index'))
 

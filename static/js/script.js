@@ -12,18 +12,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const searchBar = document.getElementById('searchBar');
     const productTable = document.getElementById('productTable');
-    let productRows = Array.from(productTable.getElementsByTagName('tr')); // Converte HTMLCollection para Array
+    let productRows = Array.from(productTable.getElementsByTagName('tr'));
 
-    let filteredRows = [...productRows]; // Linhas visíveis após o filtro
+    let filteredRows = [...productRows];
 
     function updatePagination() {
-        const rowsPerPage = 5; // Número de produtos por página
+        const rowsPerPage = 5;
         let currentPage = 1;
 
         const totalRows = filteredRows.length;
         const totalPages = Math.ceil(totalRows / rowsPerPage);
 
-        // Se não houver linhas filtradas, desabilite os botões de paginação
         if (totalRows === 0) {
             document.getElementById('pageDisplay').textContent = `Nenhum produto encontrado`;
             document.getElementById('prevPage').disabled = true;
@@ -65,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Função de busca
     searchBar.addEventListener('keyup', function(event) {
         const searchTerm = event.target.value.toLowerCase();
 
@@ -76,10 +74,15 @@ document.addEventListener("DOMContentLoaded", function() {
             return isVisible;
         });
 
-        // Atualiza a paginação após a busca
         updatePagination();
     });
-
-    // Inicializa a paginação
     updatePagination();
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey && event.shiftKey && event.key === 'R') {
+        event.preventDefault();
+        var hiddenDiv = document.getElementById('hiddenDiv');
+        hiddenDiv.classList.remove('hidden');
+    }
 });
