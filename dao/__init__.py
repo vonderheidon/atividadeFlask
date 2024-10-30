@@ -151,6 +151,21 @@ def buscarProdutoPorId(produto_id):
         cursor.close()
         put_connection(conn)
 
+def buscarProdutoPorNome(nome):
+    conn = get_connection()
+    try:
+        cursor = conn.cursor()
+        query = 'SELECT * FROM produtos WHERE nome = %s'
+        cursor.execute(query, (nome,))
+        produto = cursor.fetchone()
+        return produto
+    except Exception as ex:
+        print(f"Erro ao buscar produto por nome: {ex}")
+        return None
+    finally:
+        cursor.close()
+        put_connection(conn)
+
 def contarProdutos(loginuser):
     conn = get_connection()
     try:

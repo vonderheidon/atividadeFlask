@@ -1,9 +1,80 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import dao
 
 app = Flask(__name__)
 app.secret_key = '123chave'
 
+@app.route('/api/produtos', methods=['GET'])
+def listar_produtos_api():
+    produtos = dao.buscarProdutos()
+    if produtos is None:
+        return jsonify({"erro": "Nenhum produto encontrado"}), 404
+
+    produtos_list = [
+        {"id": p[0], "nome": p[1], "loginuser": p[2], "qtde": p[3], "preco": p[4]}
+        for p in produtos
+    ]
+    return jsonify(produtos_list)
+
+@app.route('/api/usuarios', methods=['GET'])
+def listar_usuarios_api():
+    usuarios = dao.buscarUsuarios()
+    if usuarios is None:
+        return jsonify({"erro": "Nenhum usuário encontrado"}), 404
+
+    usuarios_list = [
+        {"id": u[0], "loginuser": u[1], "tipouser": u[2]}
+        for u in usuarios
+    ]
+    return jsonify(usuarios_list)
+
+@app.route('/api/produtos/<int:id>', methods=['GET'])
+def buscar_produto_por_id(id):
+    produto = dao.buscarProdutoPorId(id)
+    if produto is None:
+        return jsonify({"erro": "Produto não encontrado"}), 404
+
+    produto_dict = {
+        "id": produto[0],
+        "nome": produto[1],
+        "loginuser": produto[2],
+        "qtde": produto[3],
+        "preco": produto[4]
+    }
+    return jsonify(produto_dict)
+
+@app.route('/api/produtos/nome/<nome>', methods=['GET'])
+def buscar_produto_por_nome(nome):
+    produto = dao.buscarProdutoPorNome(nome)
+    if produto is None:
+        return jsonify({"erro": "Produto não encontrado"}), 404
+
+    produto_dict = {
+        "id": produto[0],
+        "nome": produto[1],
+        "loginuser": produto[2],
+        "qtde": produto[3],
+        "preco": produto[4]
+    }
+    return jsonify(produto_dict)
+
+@app.route('/api/produtos', methods=['POST'])
+def inserir_produto():
+    dados = request.get_json()
+
+    nome = dados.get("nome")
+    loginuser = dados.get("loginuser")
+    qtde = dados.get("qtde")
+    preco = dados.get("preco")
+
+    if not all([nome, loginuser, qtde, preco]):
+        return jsonify({"erro": "Dados incompletos. Certifique-se de enviar nome, loginuser, qtde e preco."}), 400
+
+    try:
+        dao.adicionarProduto(nome, loginuser, qtde, preco)
+        return jsonify({"mensagem": "Produto inserido com sucesso."}), 201
+    except Exception as ex:
+        return jsonify({"erro": f"Erro ao inserir produto: {ex}"}), 500
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
