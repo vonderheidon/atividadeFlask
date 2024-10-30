@@ -1,10 +1,45 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 import dao
 
 app = Flask(__name__)
 app.secret_key = '123chave'
+app.config["JWT_SECRET_KEY"] = app.secret_key
+jwt = JWTManager(app)
+
+#API routes
+
+@app.route('/api/usuario_logado', methods=['GET'])
+@jwt_required()
+def obter_usuario_logado():
+    login_usuario = get_jwt_identity()
+    usuario = dao.buscarUsuarioPorLogin(login_usuario)
+
+    if usuario is None:
+        return jsonify({"erro": "Usuário não encontrado"}), 404
+
+    usuario_dict = {
+        "id": usuario[0],
+        "loginuser": usuario[1],
+        "tipouser": usuario[2]
+    }
+    return jsonify(usuario_dict), 200
+
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    dados = request.get_json()
+    login = dados.get("login")
+    senha = dados.get("senha")
+
+    if not dao.verificarLogin(login, senha):
+        return jsonify({"erro": "Login ou senha incorretos"}), 401
+
+    access_token = create_access_token(identity=login)
+    return jsonify(access_token=access_token), 200
 
 @app.route('/api/produtos', methods=['GET'])
+@jwt_required()
 def listar_produtos_api():
     produtos = dao.buscarProdutos()
     if produtos is None:
@@ -17,6 +52,7 @@ def listar_produtos_api():
     return jsonify(produtos_list)
 
 @app.route('/api/usuarios', methods=['GET'])
+@jwt_required()
 def listar_usuarios_api():
     usuarios = dao.buscarUsuarios()
     if usuarios is None:
@@ -29,6 +65,7 @@ def listar_usuarios_api():
     return jsonify(usuarios_list)
 
 @app.route('/api/produtos/<int:id>', methods=['GET'])
+@jwt_required()
 def buscar_produto_por_id(id):
     produto = dao.buscarProdutoPorId(id)
     if produto is None:
@@ -44,6 +81,7 @@ def buscar_produto_por_id(id):
     return jsonify(produto_dict)
 
 @app.route('/api/produtos/nome/<nome>', methods=['GET'])
+@jwt_required()
 def buscar_produto_por_nome(nome):
     produto = dao.buscarProdutoPorNome(nome)
     if produto is None:
@@ -59,6 +97,7 @@ def buscar_produto_por_nome(nome):
     return jsonify(produto_dict)
 
 @app.route('/api/produtos', methods=['POST'])
+@jwt_required()
 def inserir_produto():
     dados = request.get_json()
 
@@ -75,6 +114,8 @@ def inserir_produto():
         return jsonify({"mensagem": "Produto inserido com sucesso."}), 201
     except Exception as ex:
         return jsonify({"erro": f"Erro ao inserir produto: {ex}"}), 500
+
+##################################################################################################################################
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
