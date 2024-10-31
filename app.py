@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 import dao
 
 app = Flask(__name__)
@@ -8,23 +8,6 @@ app.config["JWT_SECRET_KEY"] = app.secret_key
 jwt = JWTManager(app)
 
 #API routes
-
-@app.route('/api/usuario_logado', methods=['GET'])
-@jwt_required()
-def obter_usuario_logado():
-    login_usuario = get_jwt_identity()
-    usuario = dao.buscarUsuarioPorLogin(login_usuario)
-
-    if usuario is None:
-        return jsonify({"erro": "Usuário não encontrado"}), 404
-
-    usuario_dict = {
-        "id": usuario[0],
-        "loginuser": usuario[1],
-        "tipouser": usuario[2]
-    }
-    return jsonify(usuario_dict), 200
-
 
 @app.route('/api/login', methods=['POST'])
 def login():
