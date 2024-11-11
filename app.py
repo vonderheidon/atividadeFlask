@@ -59,39 +59,10 @@ def atualizar_produto(id):
     except Exception as ex:
         return jsonify({"erro": f"Erro ao atualizar produto: {ex}"}), 500
 
-@app.route('/api/usuarios', methods=['GET'])
-@jwt_required()
-def listar_usuarios_api():
-    usuarios = dao.buscarUsuarios()
-    if usuarios is None:
-        return jsonify({"erro": "Nenhum usuário encontrado"}), 404
-
-    usuarios_list = [
-        {"loginuser": u[0], "senha": u[1], "tipouser": u[2]}
-        for u in usuarios
-    ]
-    return jsonify(usuarios_list)
-
 @app.route('/api/produtos/<int:id>', methods=['GET'])
 @jwt_required()
 def buscar_produto_por_id(id):
     produto = dao.buscarProdutoPorId(id)
-    if produto is None:
-        return jsonify({"erro": "Produto não encontrado"}), 404
-
-    produto_dict = {
-        "id": produto[0],
-        "nome": produto[1],
-        "loginuser": produto[2],
-        "qtde": produto[3],
-        "preco": produto[4]
-    }
-    return jsonify(produto_dict)
-
-@app.route('/api/produtos/nome/<nome>', methods=['GET'])
-@jwt_required()
-def buscar_produto_por_nome(nome):
-    produto = dao.buscarProdutoPorNome(nome)
     if produto is None:
         return jsonify({"erro": "Produto não encontrado"}), 404
 
@@ -122,6 +93,63 @@ def inserir_produto():
         return jsonify({"mensagem": "Produto inserido com sucesso."}), 201
     except Exception as ex:
         return jsonify({"erro": f"Erro ao inserir produto: {ex}"}), 500
+
+@app.route('/api/produtos/<int:id>', methods=['DELETE'])
+@jwt_required()
+def excluir_produto_api(id):
+    try:
+        dao.excluirProduto(id)
+        return jsonify({"mensagem": "Produto excluído com sucesso."}), 200
+    except Exception as ex:
+        return jsonify({"erro": f"Erro ao excluir produto: {ex}"}), 500
+
+@app.route('/api/cadastrarUsuario', methods=['POST'])
+def criar_usuario_api():
+    dados = request.get_json()
+    login = dados.get("loginuser")
+    senha = dados.get("senha")
+    tipo_user = dados.get("tipouser", "normal")
+
+    if not all([login, senha]):
+        return jsonify({"erro": "Dados incompletos. Certifique-se de enviar login e senha."}), 400
+
+    if dao.verificarSeLoginExiste(login):
+        return jsonify({"erro": "Este login ja esta em uso. Tente outro."}), 400
+
+    try:
+        dao.criarUsuario(login, senha, tipo_user)
+        return jsonify({"mensagem": "Usuario criado com sucesso."}), 201
+    except Exception as ex:
+        return jsonify({"erro": f"Erro ao criar usuario: {ex}"}), 500
+
+@app.route('/api/usuarios', methods=['GET'])
+@jwt_required()
+def listar_usuarios_api():
+    usuarios = dao.buscarUsuarios()
+    if usuarios is None:
+        return jsonify({"erro": "Nenhum usuário encontrado"}), 404
+
+    usuarios_list = [
+        {"loginuser": u[0], "senha": u[1], "tipouser": u[2]}
+        for u in usuarios
+    ]
+    return jsonify(usuarios_list)
+
+@app.route('/api/usuarios/<login>', methods=['PUT'])
+@jwt_required()
+def atualizar_usuario_api(login):
+    dados = request.get_json()
+    novo_tipo = dados.get("tipouser")
+
+    if not novo_tipo:
+        return jsonify({"erro": "Tipo de usuário não fornecido."}), 400
+
+    try:
+        dao.atualizarTipoUsuario(login, novo_tipo)
+        return jsonify({"mensagem": "Usuário atualizado com sucesso."}), 200
+    except Exception as ex:
+        return jsonify({"erro": f"Erro ao atualizar usuário: {str(ex)}"}), 500
+
 
 ##################################################################################################################################
 

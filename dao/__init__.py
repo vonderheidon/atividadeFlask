@@ -8,7 +8,7 @@ db_pool = psycopg2.pool.SimpleConnectionPool(
     host='localhost',
     database='atvd1bcc',
     user='postgres',
-    password='Bl@ck0246'
+    password='12345678'
 )
 
 def get_connection():
