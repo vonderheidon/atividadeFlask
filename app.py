@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+from markupsafe import Markup
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
+import pandas as pd
+import plotly.express as px
 import dao
 
 app = Flask(__name__)
@@ -34,6 +37,28 @@ def listar_produtos_api():
     ]
     return jsonify(produtos_list)
 
+@app.route('/api/produtos/<int:id>', methods=['PUT'])
+@jwt_required()
+def atualizar_produto(id):
+    dados = request.get_json()
+
+    nome = dados.get("nome")
+    qtde = dados.get("qtde")
+    preco = dados.get("preco")
+
+    if not all([nome, qtde, preco]):
+        return jsonify({"erro": "Dados incompletos. Certifique-se de enviar nome, qtde e preco."}), 400
+
+    try:
+        produto = dao.buscarProdutoPorId(id)
+        if produto is None:
+            return jsonify({"erro": "Produto não encontrado"}), 404
+
+        dao.atualizarProduto(id, nome, qtde, preco)
+        return jsonify({"mensagem": "Produto atualizado com sucesso."}), 200
+    except Exception as ex:
+        return jsonify({"erro": f"Erro ao atualizar produto: {ex}"}), 500
+
 @app.route('/api/usuarios', methods=['GET'])
 @jwt_required()
 def listar_usuarios_api():
@@ -42,7 +67,7 @@ def listar_usuarios_api():
         return jsonify({"erro": "Nenhum usuário encontrado"}), 404
 
     usuarios_list = [
-        {"id": u[0], "loginuser": u[1], "tipouser": u[2]}
+        {"loginuser": u[0], "senha": u[1], "tipouser": u[2]}
         for u in usuarios
     ]
     return jsonify(usuarios_list)
@@ -279,6 +304,26 @@ def cadastro():
             return redirect(url_for('index'))
 
     return render_template('cadastrarUsuario.html')
+
+@app.route('/grafico', methods=['GET'])
+def visualizacao():
+    if 'usuario_logado' not in session:
+        flash("Você precisa estar logado para acessar esta página.")
+        return redirect(url_for('index'))
+
+    produtos = dao.buscarProdutos()
+
+    if not produtos:
+        flash("Não há produtos cadastrados para serem exibidos ainda.")
+        return redirect(url_for('listar_produtos'))
+
+    df = pd.DataFrame(produtos, columns=["id", "nome", "loginuser", "qtde", "preco"])
+
+    fig = px.bar(df, x="nome", y="qtde", title="Quantidade de Produtos por Nome")
+
+    graph_html = fig.to_html(full_html=False)
+
+    return f"<html><body>{Markup(graph_html)}</body></html>"
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -15,6 +15,13 @@
         <div class="menuContainer">
             <div class="menu">
                 <a href="{{ url_for('adicionar_produto') }}"><i class="fas fa-plus-circle"></i> Adicionar Produto</a>
+
+                {% if produtos %}
+                <a href="{{ url_for('visualizacao') }}" target="_blank"><i class="fas fa-chart-bar"></i> Ver Gráfico de estoque</a>
+                {% else %}
+                <a href="{{ url_for('visualizacao') }}"><i class="fas fa-chart-bar"></i> Ver Gráfico de estoque</a>
+                {% endif %}
+
                 {% if tipo_usuario == 'super' %}
                 <a href="{{ url_for('listar_usuarios') }}"><i class="fas fa-users"></i> Gerenciar Usuários</a>
                 {% endif %}
@@ -27,7 +34,6 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</i></th>
                         <th>Nome</i></th>
                         <th>Quantidade</th>
                         <th>Preço</th>
@@ -37,7 +43,6 @@
                 <tbody id="productTable">
                     {% for produto in produtos %}
                     <tr>
-                        <td>{{ produto[0] }}</td>
                         <td class="product-name">{{ produto[1] }}</td>
                         <td>{{ produto[3] }}</td>
                         <td>{{ produto[4] }}</td>
