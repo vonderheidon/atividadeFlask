@@ -104,7 +104,6 @@ def excluir_produto_api(id):
         return jsonify({"erro": f"Erro ao excluir produto: {ex}"}), 500
 
 @app.route('/api/cadastrarUsuario', methods=['POST'])
-@jwt_required()
 def criar_usuario_api():
     dados = request.get_json()
     login = dados.get("loginuser")
