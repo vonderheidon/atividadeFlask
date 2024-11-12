@@ -347,11 +347,62 @@ def visualizacao():
 
     df = pd.DataFrame(produtos, columns=["id", "nome", "loginuser", "qtde", "preco"])
 
-    fig = px.bar(df, x="nome", y="qtde", title="Quantidade de Produtos por Nome")
+    fig = px.bar(df, x="nome", y="qtde", title="Quantidade de Produtos por Nome",
+                 labels={"qtde": "Quantidade", "nome": "Nome do Produto"})
+
+    fig.update_traces(
+        marker=dict(
+            color='pink',
+            line=dict(
+                color='rgb(119,67,22)',
+                width=1
+            )
+        )
+    )
+
+    fig.update_layout(
+        title="Quantidade de Produtos por Nome",
+        title_x=0.5,
+        title_font=dict(size=32, color="rgb(119,67,22)", family="Dancing Script, cursive"),
+        xaxis=dict(
+            tickangle=45,
+            title="Nome do Produto",
+            title_font=dict(size=20, color="#703c15", family="Dancing Script, cursive"),
+            tickfont=dict(size=20, color="#703c15", family="Dancing Script, cursive")
+        ),
+        yaxis=dict(
+            title="Quantidade",
+            title_font=dict(size=20, color="#703c15", family="Dancing Script, cursive"),
+            tickfont=dict(size=20, color="#703c15", family="Dancing Script, cursive")
+        ),
+        plot_bgcolor="#c8f3f5",
+        paper_bgcolor="#fd92c6",
+        showlegend=False,
+        images=[{
+            'source': '/static/images/kitty.webp',
+            'xref': 'paper',
+            'yref': 'paper',
+            'x': 0.1,
+            'y': 1,
+            'sizex': 1.0,
+            'sizey': 1.0,
+            'opacity': 0.5,
+            'layer': 'below'
+        }]
+    )
 
     graph_html = fig.to_html(full_html=False)
 
-    return f"<html><body>{Markup(graph_html)}</body></html>"
+    return f"""
+    <html>
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        {Markup(graph_html)}
+    </body>
+    </html>
+    """
 
 if __name__ == '__main__':
     app.run(debug=True)
