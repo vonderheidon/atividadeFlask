@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from markupsafe import Markup
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 import pandas as pd
+import os
 import plotly.express as px
 import dao
 
@@ -134,6 +135,20 @@ def listar_usuarios_api():
         for u in usuarios
     ]
     return jsonify(usuarios_list)
+
+@app.route('/api/usuarios/<login>', methods=['GET'])
+@jwt_required()
+def buscar_usuario_por_login_api(login):
+    usuario = dao.buscarUsuarioPorLogin(login)
+    if usuario is None:
+        return jsonify({"erro": "Usuário não encontrado"}), 404
+
+    usuario_dict = {
+        "loginuser": usuario[0],
+        "senha": usuario[1],
+        "tipouser": usuario[2]
+    }
+    return jsonify(usuario_dict)
 
 @app.route('/api/usuarios/<login>', methods=['PUT'])
 @jwt_required()
@@ -382,7 +397,7 @@ def visualizacao():
             'source': '/static/images/kitty.webp',
             'xref': 'paper',
             'yref': 'paper',
-            'x': 0.1,
+            'x': 0.3,
             'y': 1,
             'sizex': 1.0,
             'sizey': 1.0,
@@ -405,4 +420,8 @@ def visualizacao():
     """
 
 if __name__ == '__main__':
+
+    certificado = os.path.join('ssl', 'certificado.pem')
+    chave = os.path.join('ssl', 'chave.pem')
+    #app.run(ssl_context=(certificado, chave), debug=True)
     app.run(debug=True)

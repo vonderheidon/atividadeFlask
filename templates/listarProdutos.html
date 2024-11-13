@@ -45,7 +45,7 @@
                     <tr>
                         <td class="product-name">{{ produto[1] }}</td>
                         <td>{{ produto[3] }}</td>
-                        <td>{{ produto[4] }}</td>
+                        <td>R$ {{ produto[4] }}</td>
                         <td>
                             <a href="{{ url_for('detalhes_produto', id=produto[0]) }}" title="Detalhes"><i class="fas fa-info-circle"></i></a>
                             <a href="{{ url_for('editar_produto', id=produto[0]) }}" title="Editar"><i class="fas fa-edit"></i></a>
